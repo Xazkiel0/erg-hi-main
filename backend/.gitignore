@@ -1,0 +1,10 @@
+__pycache__/
+.venv
+.env
+.env.example
+images/*
+images/slides/*
+!images/default.jpeg
+
+.space
+Spacefile

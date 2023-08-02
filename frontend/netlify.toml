@@ -1,0 +1,7 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[context.production.environment]
+  allowed_hosts = ["erghi-1-a0661667.deta.app"]  
