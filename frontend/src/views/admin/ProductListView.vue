@@ -14,8 +14,8 @@ import { reactive, ref, onMounted, computed } from 'vue';
 const productStore = useProductStore();
 
 const searchQuery = ref('');
-const pageCount = ref(1);
 const isSearched = ref(false);
+const pageCount = ref(1);
 const productHasMore = ref(true);
 
 const products = reactive([]);
@@ -73,7 +73,7 @@ const truncate = (string, n) => {
 };
 
 const paginateItems = computed(() => {
-  const pageSize = 3;
+  const pageSize = 10;
   const startIndex = (pageCount.value - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const paginatedItems = productsBackup.slice(startIndex, endIndex);
@@ -81,7 +81,7 @@ const paginateItems = computed(() => {
 });
 
 const isHasMore = computed(() => {
-  return 3 * pageCount.value < productsBackup.length;
+  return 10 * pageCount.value < productsBackup.length;
 });
 
 const next = () => {

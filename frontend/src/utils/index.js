@@ -1,21 +1,22 @@
 import { Deta } from "deta";
 
 const env = {
-    api_url: "https://erghimain-1-p7891851.deta.app/api"
+    api_url: "http://localhost:4200/"
 }
 
-const deta = Deta("c0XfD1m1bVor_Zry1g9L9qhW8Y5jMnVfR7wrkxWX4bcLq")
+const deta = Deta("c09jLVEPJUCr_FfpE4PWDt6rcveTWDdFxhphp4pXN3ox1")
 
 const drive = deta.Drive("images")
 
 async function get_image(filename) {
     try {
         const resp = await drive.get(filename)
-        return resp
+        if (resp) 
+            return resp
     } catch (error) {
         console.warn(`Image ${filename} not found!`)
     }
-    return await drive.get("default.jpeg")
+    return await drive.get("default.png")
 }
 
 async function list_images() {

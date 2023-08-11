@@ -10,19 +10,17 @@ import { useHeroStore } from '../stores/hero';
 import { useAboutUsStore } from '../stores/aboutUs';
 import { useContactUsStore } from '../stores/contactUs';
 
-import { env, list_images } from '../utils'
-
 const productStore = useProductStore();
 const heroStore = useHeroStore();
 const aboutUsStore = useAboutUsStore();
 const contactUsStore = useContactUsStore();
 
-const baseUrl = ref(env.api_url);
 const searchQuery = ref('');
 const pageCount = ref(1);
 const productHasMore = ref(false);
 const isSearched = ref(false);
-const img = ref('')
+const img = ref('');
+const imgAbout = ref('');
 
 const products = reactive([]);
 const productsBackup = reactive([]);
@@ -31,7 +29,7 @@ const hero = reactive({});
 const aboutUs = reactive({});
 const contactUses = reactive([]);
 
-import { get_image } from "../utils";
+import { get_image } from '../utils';
 import ImageDeta from '../components/ImageDeta.vue';
 
 onMounted(async () => {
@@ -39,7 +37,12 @@ onMounted(async () => {
   heroStore.getAll();
   productStore.getSome(pageCount.value, true);
   contactUsStore.getAll();
-  img.value = URL.createObjectURL(await get_image(hero.filename))
+  img.value = URL.createObjectURL(await get_image(hero.filename));
+  imgAbout.value = URL.createObjectURL(await get_image(aboutUs.filename));
+});
+
+aboutUsStore.$subscribe((mutation, state) => {
+  Object.assign(aboutUs, state.aboutUs);
 });
 
 contactUsStore.$subscribe((mutation, state) => {
@@ -48,10 +51,6 @@ contactUsStore.$subscribe((mutation, state) => {
 
 heroStore.$subscribe((mutation, state) => {
   Object.assign(hero, state.hero);
-});
-
-aboutUsStore.$subscribe((mutation, state) => {
-  Object.assign(aboutUs, state.aboutUs);
 });
 
 productStore.$subscribe((mutation, state) => {
@@ -115,15 +114,11 @@ const seeMore = () => {
     productHasMore.value = isHasMore.value;
   }
 };
-
-
 </script>
 
 <template>
   <div>
-    <hero
-      :image="img"
-    >
+    <hero :image="img">
       <h1
         class="text-grey-100 text-4xl md:text-5xl font-medium leading-[3.5rem] md:leading-[4rem]"
       >
@@ -138,7 +133,8 @@ const seeMore = () => {
         <div class="w-full justify-center items-center flex flex-col p-8">
           <h1 class="text-3xl text-brand-900 font-semibold">Our Products</h1>
           <span class="text-brand-800">
-            We only make good product with international standards. You can find it below.
+            We only make good product with international standards. You can find
+            it below.
           </span>
         </div>
         <div
@@ -188,7 +184,11 @@ const seeMore = () => {
           class="flex flex-col gap-4 items-center md:items-stretch md:gap-0 md:flex-row justify-between w-full"
         >
           <div class="basis-1 md:basis-1/2 flex justify-center w-full">
-            <image-deta :filename="aboutUs.filename" alt-prop="about" class-prop="w-96 h-64 object-cover rounded-md"/>
+            <img
+              :src="imgAbout"
+              alt="about"
+              class="w-96 h-64 object-cover rounded-md"
+            />
           </div>
           <div class="basis-1 w-[80%] md:w-full md:basis-1/2 flex flex-col">
             <div class="flex gap-4 flex-col md:grow">
@@ -198,6 +198,12 @@ const seeMore = () => {
               <p>
                 {{ aboutUs.description }}
               </p>
+              <div class="mb-2 font-medium">
+                Lihat member kami
+                <router-link to="/member" class="text-blue-700">
+                  disini
+                </router-link>
+              </div>
             </div>
             <div class="flex gap-2 items-center">
               <span>Contact us by: </span>
@@ -207,7 +213,11 @@ const seeMore = () => {
                 :href="contactUs.link"
                 :key="contactUs.id"
               >
-              <image-deta :filename="contactUs.filename" :alt-prop="contactUs.name" class-prop="w-8 h-8 object-cover rounded-md"/>
+                <image-deta
+                  :filename="contactUs.filename"
+                  :alt-prop="contactUs.name"
+                  class-prop="w-8 h-8 object-cover rounded-md"
+                />
               </a>
             </div>
           </div>

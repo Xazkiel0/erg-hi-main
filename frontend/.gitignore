@@ -29,3 +29,6 @@ dist-ssr
 # lock files
 package-lock.json
 yarn.lock
+
+.space
+Spacefile

@@ -1,11 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
+import MemberView from '../views/MemberView.vue';
 import DetailProductView from '../views/DetailProductView.vue';
 import LoginView from '../views/LoginView.vue';
 
 import ProductListView from '../views/admin/ProductListView.vue';
 import ProductNewView from '../views/admin/ProductNewView.vue';
 import ProductDetailView from '../views/admin/ProductDetailView.vue';
+import MemberListView from '../views/admin/member/MemberListView.vue';
+import MemberNewView from '../views/admin/member/MemberNewView.vue';
+import MemberDetailView from '../views/admin/member/MemberDetailView.vue';
 import HeroView from '../views/admin/content/HeroView.vue';
 import AboutUsView from '../views/admin/content/AboutUsView.vue';
 import ContactUsListView from '../views/admin/content/ContactUsListView.vue';
@@ -41,6 +45,11 @@ const router = createRouter({
           component: HomeView,
         },
         {
+          path: 'member',
+          name: 'Member',
+          component: MemberView,
+        },
+        {
           path: ':productId',
           name: 'DetailProduct',
           component: DetailProductView,
@@ -72,6 +81,26 @@ const router = createRouter({
           path: 'products/:productId',
           name: 'AdminProductDetail',
           component: ProductDetailView,
+        },
+        {
+          path: 'members',
+          name: 'AdminMemberList',
+          component: MemberListView,
+        },
+        {
+          path: 'members/new',
+          name: 'AdminMemberNew',
+          component: MemberNewView,
+        },
+        {
+          path: 'members/:memberId/edit',
+          name: 'AdminMemberEdit',
+          component: MemberNewView,
+        },
+        {
+          path: 'members/:memberId',
+          name: 'AdminMemberDetail',
+          component: MemberDetailView,
         },
         {
           path: 'hero',

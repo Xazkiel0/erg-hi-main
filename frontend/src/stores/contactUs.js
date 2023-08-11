@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { defineStore } from 'pinia';
 import router from '../router';
-import { upload_image } from '../utils';
 
 export const useContactUsStore = defineStore('contact-us', {
   state: () => ({

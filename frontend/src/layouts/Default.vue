@@ -30,10 +30,16 @@ const currentRoute = computed(() => {
           <span class="text-grey-900">About Us</span>
         </a>
         </MenuItem>
+        <MenuItem class="py-1 px-3 flex hover:bg-grey-200">
+        <router-link to="/member" class="flex items-center gap-1">
+          <span class="text-grey-900">Our Member</span>
+        </router-link>
+        </MenuItem>
       </template>
       <template #right-menu>
         <a href="/#products">Our Products</a>
         <a href="/#about">About Us</a>
+        <router-link to="/member">Our Members</router-link>
       </template>
     </navbar>
     <div class="grow mb-16 mx-auto w-full">

@@ -24,6 +24,20 @@ class ProductTitleOnly(BaseModel):
         orm_mode = True
 
 
+class MemberRequest(BaseModel):
+    name: str
+    nip: str
+    email: str
+    google_scholar: str
+    status: str
+    filename: str
+
+
+class MemberResponse(MemberRequest):
+    class Config:
+        org_mode = True
+
+
 class UserRequest(BaseModel):
     username: str
     email: EmailStr

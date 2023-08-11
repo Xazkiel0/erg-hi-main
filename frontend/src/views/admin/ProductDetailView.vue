@@ -11,23 +11,22 @@ import { onMounted, reactive, ref } from 'vue';
 
 import { useProductStore } from '../../stores/product';
 import { useRoute } from 'vue-router';
-
-import { env } from '../../utils'
-import ImageDeta from '../../components/ImageDeta.vue';
+import { get_image } from "../../utils";
 
 const productStore = useProductStore();
 const route = useRoute();
 const product = reactive({});
-const baseUrl = ref(env.api_url);
+const img = ref()
 
 const { productId } = route.params;
 
-onMounted(() => {
+onMounted(async () => {
   productStore.getOneById({ id: productId });
 });
 
-productStore.$subscribe((mutation, state) => {
+productStore.$subscribe(async (mutation, state) => {
   Object.assign(product, state.product);
+  img.value = URL.createObjectURL(await get_image(product.filename))
 });
 
 const deleteProduct = () => {
@@ -73,11 +72,11 @@ const deleteProduct = () => {
     class="bg-grey-50 rounded-md my-8 flex flex-col gap-6 py-6 px-6 md:flex-row lg:py-12"
   >
     <div class="basis-1/2 flex justify-center">
-      <image-deta
+      <img
         v-if="product"
-        :filename="product.filename"
-        :alt-prop="product.title"
-        class-prop="w-96 h-96 object-cover rounded-md"
+        :alt="product.title"
+        :src="img"
+        class="w-96 h-96 object-cover rounded-md"
       />
       <div v-else class="w-96 h-96 bg-grey-500 rounded-md"></div>
     </div>

@@ -2,36 +2,35 @@ import axios from 'axios';
 import { defineStore } from 'pinia';
 import router from '../router';
 
-export const useProductStore = defineStore('products', {
+export const useMemberStore = defineStore('members', {
   state: () => ({
-    products: [],
-    product: {},
-    tdidf: {},
+    members: [],
+    member: {},
     total: 0,
     hasMore: false,
   }),
   actions: {
     async getAll() {
       try {
-        const response = await axios.get('/products/');
+        const response = await axios.get('/members/');
         const data = await response.data;
         if (response.status === 200) {
-          this.products = [...data.data];
+          this.members = [...data.data];
         }
       } catch (err) {
         console.error('[ERROR]: ' + err);
       }
     },
-    async getSome(page = 1, update = false) {
+    async getSome(query = '',page = 1, update = false) {
       try {
-        const response = await axios.get(`/products/?page=${page}&limit=10`);
+        const response = await axios.get(`/members/?query=${query}&page=${page}&limit=10`);
         const data = await response.data;
         if (response.status === 200) {
           if (update) {
-            this.products = [...data.data];
+            this.members = [...data.data];
             this.total = data.total;
           } else {
-            this.products.push(...data.data);
+            this.members.push(...data.data);
           }
           this.hasMore = data.has_more;
         }
@@ -41,25 +40,10 @@ export const useProductStore = defineStore('products', {
     },
     async getOneById(payload) {
       try {
-        const response = await axios.get(`/products/${payload.id}/`);
+        const response = await axios.get(`/members/${payload.id}/`);
         const data = await response.data;
         if (response.status === 200) {
-          this.product = data;
-        }
-      } catch (err) {
-        console.error('[ERROR]: ' + err);
-      }
-    },
-    async getTfIdf(payload) {
-      try {
-        const response = await axios.get('/products/tfidf/', {
-          params: {
-            query: payload.query,
-          },
-        });
-        const data = await response.data;
-        if (response.status === 200) {
-          this.tdidf = { ...data };
+          this.member = data;
         }
       } catch (err) {
         console.error('[ERROR]: ' + err);
@@ -88,13 +72,13 @@ export const useProductStore = defineStore('products', {
     },
     async create(payload) {
       try {
-        const response = await axios.post('/products/', payload, {
+        const response = await axios.post('/members/', payload, {
           headers: {
             Authorization: `Bearer ${$cookies.get('token')}`,
           },
         });
         if (response.status === 201) {
-          router.push({ name: 'AdminProductList' });
+          router.push({ name: 'AdminMemberList' });
         }
       } catch (err) {
         this.deleteFile(payload.filename);
@@ -125,15 +109,15 @@ export const useProductStore = defineStore('products', {
     },
     async update(id, payload) {
       try {
-        const response = await axios.put(`/products/${id}/`, payload, {
+        const response = await axios.put(`/members/${id}/`, payload, {
           headers: {
             Authorization: `Bearer ${$cookies.get('token')}`,
           },
         });
         if (response.status === 202) {
           router.push({
-            name: 'AdminProductDetail',
-            params: { productId: id },
+            name: 'AdminMemberDetail',
+            params: { memberId: id },
           });
         }
       } catch (err) {
@@ -156,13 +140,13 @@ export const useProductStore = defineStore('products', {
     },
     async delete(id) {
       try {
-        const response = await axios.delete(`/products/${id}/`, {
+        const response = await axios.delete(`/members/${id}/`, {
           headers: {
             Authorization: `Bearer ${$cookies.get('token')}`,
           },
         });
         if (response.status === 200) {
-          router.push({ name: 'AdminProductList' });
+          router.push({ name: 'AdminMemberList' });
         }
       } catch (err) {
         console.error('[ERROR]: ' + err);

@@ -136,6 +136,7 @@ const reset = () => {
     data['journal link'].value = '';
     data['video link'].value = '';
     data.description.value = '';
+    fileInput.value.value = '';
   } else {
     data.title.value = productBackup.title;
     data.author.value = productBackup.author;
@@ -178,7 +179,7 @@ const back = () => {
     <template #icon>
       <plus-icon size="28" />
     </template>
-    {{ productId ? 'Edit' : 'Add' }} Products
+    {{ productId ? 'Edit' : 'Add' }} Product
     <template #buttons>
       <basic-button class-name="bg-red-500 text-grey-200" @click="back">
         <arrow-left-icon size="24" />

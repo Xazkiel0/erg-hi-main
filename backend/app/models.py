@@ -16,6 +16,19 @@ class Product(Base):
     author = Column(String)
 
 
+class Member(Base):
+    __tablename__ = "members"
+    
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, index=True)
+    name = Column(String)
+    nip = Column(String)
+    email = Column(String)
+    google_scholar = Column(String)
+    status = Column(String)
+    filename = Column(String)
+
+
+
 class User(Base):
     __tablename__ = "users"
 

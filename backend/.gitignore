@@ -1,7 +1,7 @@
 __pycache__/
 .venv
+venv
 .env
-.env.example
 images/*
 images/slides/*
 !images/default.jpeg

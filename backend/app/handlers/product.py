@@ -1,18 +1,13 @@
-import os
 from fastapi import HTTPException, status
 from pydantic import UUID4
 from sqlalchemy.orm import Session
 
 from app import models, schemas
 from app import tf_idf
+from app.handlers import image
 
 product_model = models.Product
 
-IMAGEDIR = "./images"
-
-def check_file_exists(directory, filename):
-    file_path = os.path.join(directory, filename)
-    return os.path.isfile(file_path)
 
 def show_products(db: Session, page: int = 1, limit: int = 10):
     total_count = db.query(product_model).count()
@@ -97,8 +92,7 @@ def delete_product(id: UUID4, db: Session):
         )
 
     filename = product.first().filename
-    if check_file_exists(IMAGEDIR, filename):
-        os.remove(f"{IMAGEDIR}/{filename}")
+    image.delete_image(filename)
 
     product.delete(synchronize_session=False)
     db.commit()

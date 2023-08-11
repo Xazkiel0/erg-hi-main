@@ -41,6 +41,19 @@ const logout = () => {
           >
         </router-link>
         <router-link
+          to="/admin/members"
+          class="flex gap-4 cursor-pointer group"
+        >
+          <product-icon
+            size="24"
+            class="transition duration-200 group-hover:text-brand-600"
+          />
+          <span
+            class="text-md text-grey-900 font-medium transition duration-200 group-hover:text-brand-600"
+            >Members</span
+          >
+        </router-link>
+        <router-link
           to="/admin/hero"
           class="flex gap-4 cursor-pointer group"
         >
