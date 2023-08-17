@@ -1,10 +1,10 @@
 import { Deta } from "deta";
 
 const env = {
-    api_url: "https://erghiapi-1-p0166292.deta.app/"
+    api_url: import.meta.env.VITE_API_URL
 }
 
-const deta = Deta("c09jLVEPJUCr_FfpE4PWDt6rcveTWDdFxhphp4pXN3ox1")
+const deta = Deta(import.meta.env.VITE_DETA_DRIVE_KEY)
 
 const drive = deta.Drive("images")
 
