@@ -1,7 +1,7 @@
 import { Deta } from "deta";
 
 const env = {
-    api_url: "http://localhost:4200/"
+    api_url: "https://erghiapi-1-p0166292.deta.app/"
 }
 
 const deta = Deta("c09jLVEPJUCr_FfpE4PWDt6rcveTWDdFxhphp4pXN3ox1")

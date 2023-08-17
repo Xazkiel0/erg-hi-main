@@ -10,11 +10,13 @@ export const useUserStore = defineStore('users', {
   actions: {
     async login(payload) {
       try {
-        await axios.post('/login/', payload, {
+        const res = await axios.post('/login/', payload, {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
         });
+        const data = await res.data
+        $cookies.set('token', data.access_token)
         router.push('/admin/products');
       } catch (err) {
         this.error = err.response.data.detail

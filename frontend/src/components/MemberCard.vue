@@ -10,7 +10,7 @@ const { member } = toRefs(props);
 </script>
 
 <template>
-  <div class="bg-gray-50 w-full rounded-md p-8 flex flex-row">
+  <div class="bg-gray-50 w-4/5 rounded-md p-8 flex flex-col gap-4 mx-auto md:w-full md:flex-row md:gap-2">
     <div class="basis-1/4 flex justify-center">
       <image-deta
         :filename="member.filename"
@@ -18,7 +18,7 @@ const { member } = toRefs(props);
         class-prop="w-40 h-40 object-cover rounded-md"
       />
     </div>
-    <div class="basis-3/4 flex items-center">
+    <div class="basis-3/4 flex items-center justify-center md:justify-start">
       <table>
         <tr class="text-grey-800">
           <td>Nama</td>

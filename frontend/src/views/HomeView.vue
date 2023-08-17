@@ -38,11 +38,11 @@ onMounted(async () => {
   productStore.getSome(pageCount.value, true);
   contactUsStore.getAll();
   img.value = URL.createObjectURL(await get_image(hero.filename));
-  imgAbout.value = URL.createObjectURL(await get_image(aboutUs.filename));
 });
 
-aboutUsStore.$subscribe((mutation, state) => {
+aboutUsStore.$subscribe(async (mutation, state) => {
   Object.assign(aboutUs, state.aboutUs);
+  imgAbout.value = URL.createObjectURL(await get_image(aboutUs.filename));
 });
 
 contactUsStore.$subscribe((mutation, state) => {

@@ -15,6 +15,8 @@ axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 axios.defaults.headers.common["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE";
 axios.defaults.headers.common["Access-Control-Allow-Headers"] = "Content-Type, X-Requested-With";
 
+VueCookies.config('1d');
+
 const app = createApp(App);
 const pinia = createPinia();
 
