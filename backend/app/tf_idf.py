@@ -14,7 +14,6 @@ class Tf_Idf:
 
 
     def clean_w(self, word):
-        # return re.split(" ", re.sub(r"[^\w\s]", "", word.lower()))
         return re.split(" ", re.sub(r"[^a-zA-Z\s]", "", word.lower()))
 
     def clean_text(self):
