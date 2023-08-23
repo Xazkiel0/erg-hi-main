@@ -19,7 +19,8 @@ async def upload_image(file, category: str):
     _, ext = os.path.splitext(str(file.filename))
     file.filename = f"{category}-{uuid.uuid4()}{ext}"
     content = await file.read()
-
+    content = compress_image(content, 500)
+    
     drive.put(name=file.filename, data=content)
 
     return {"filename": file.filename}
@@ -33,7 +34,8 @@ async def upload_slides(files):
         _, ext = os.path.splitext(str(file.filename))
         file.filename = f"slide-{uuid.uuid4()}{ext}"
         content = await file.read()
-
+        content = compress_image(content, 500)
+    
         drive.put(file.filename, content)
 
     return {"detail": "Slides were updated"}
