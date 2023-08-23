@@ -21,7 +21,7 @@ async def upload_image(file, category: str):
     content = await file.read()
     content = compress_image(content, 500)
     
-    drive.put(name=file.filename, data=content)
+    drive.put(name=file.filename, data=content.getvalue())
 
     return {"filename": file.filename}
 
@@ -36,7 +36,7 @@ async def upload_slides(files):
         content = await file.read()
         content = compress_image(content, 500)
     
-        drive.put(file.filename, content)
+        drive.put(file.filename, content.getvalue())
 
     return {"detail": "Slides were updated"}
 
