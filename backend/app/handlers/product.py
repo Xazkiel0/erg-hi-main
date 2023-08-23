@@ -39,7 +39,7 @@ def show_product(id: UUID4, db: Session):
 
 
 def show_tf_idf(query: str, db: Session):
-    corpus = {a.id: a.title for a in show_products(db)["data"]}
+    corpus = {a.id: a.title for a in show_products(db,0,0)["data"]}
     df = tf_idf.Tf_Idf(corpus)
     tfidf = df.val_tfidf
 
