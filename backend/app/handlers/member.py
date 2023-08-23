@@ -10,58 +10,27 @@ member_model = models.Member
 
 
 def show_members(db: Session, query, page, limit):
-    like_query = func.lower('%{}%'.format(query))
-
-    total_count = (
-        db.query(member_model)
-        .where(
-            (
-                or_(
-                    func.lower(member_model.name).like(like_query),
-                    func.lower(member_model.nip).like(like_query),
-                    func.lower(member_model.email).like(like_query),
-                    func.lower(member_model.google_scholar).like(like_query),
-                    func.lower(member_model.status).like(like_query),
-                )
+    like_query = func.lower("%{}%".format(query))
+    transaction = db.query(member_model).where(
+        (
+            or_(
+                func.lower(member_model.name).like(like_query),
+                func.lower(member_model.nip).like(like_query),
+                func.lower(member_model.email).like(like_query),
+                func.lower(member_model.google_scholar).like(like_query),
+                func.lower(member_model.status).like(like_query),
             )
         )
-        .count()
     )
+
+    total_count = transaction.count()
     has_more = (page * limit) < total_count
 
     if limit <= 0:
-        return {
-            "data": (
-                db.query(member_model).where(
-                    (
-                        or_(
-                            func.lower(member_model.name).like(like_query),
-                            func.lower(member_model.nip).like(like_query),
-                            func.lower(member_model.email).like(like_query),
-                            func.lower(member_model.google_scholar).like(like_query),
-                            func.lower(member_model.status).like(like_query),
-                        )
-                    )
-                )
-            )
-        }
+        return {"data": transaction.all() }
     else:
         return {
-            "data": db.query(member_model)
-            .where(
-                (
-                    or_(
-                        func.lower(member_model.name).like(like_query),
-                        func.lower(member_model.nip).like(like_query),
-                        func.lower(member_model.email).like(like_query),
-                        func.lower(member_model.google_scholar).like(like_query),
-                        func.lower(member_model.status).like(like_query),
-                    )
-                )
-            )
-            .offset((page - 1) * limit)
-            .limit(limit)
-            .all(),
+            "data": transaction.offset((page - 1) * limit).limit(limit).all(),
             "total": total_count,
             "has_more": has_more,
         }
