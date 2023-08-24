@@ -61,8 +61,14 @@ def compress_image(file, base_width: int = 360) -> io.BytesIO:
 
 
 def get_image(filename: str, slides=False):
-    file = drive.get(filename)
-    return Response(content=file.read(), media_type="image/png")
+    try:
+        file = drive.get(filename)
+        return Response(content=file.read(), media_type="image/png")
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Image with name {filename} is not found",
+        )
 
 
 def delete_image(filename):
