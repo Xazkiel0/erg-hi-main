@@ -62,8 +62,7 @@ def compress_image(file, base_width: int = 360) -> io.BytesIO:
 
 def get_image(filename: str, slides=False):
     file = drive.get(filename)
-    content = compress_image(file.read(), 500)
-    return Response(content=content.getvalue(), media_type="image/png")
+    return Response(content=file.read(), media_type="image/png")
 
 
 def delete_image(filename):
