@@ -12,7 +12,7 @@ export const useMemberStore = defineStore('members', {
   actions: {
     async getAll() {
       try {
-        const response = await axios.get('/members/');
+        const response = await axios.get('/members/?limit=0');
         const data = await response.data;
         if (response.status === 200) {
           this.members = [...data.data];

@@ -13,7 +13,7 @@ export const useProductStore = defineStore('products', {
   actions: {
     async getAll() {
       try {
-        const response = await axios.get('/products/');
+        const response = await axios.get('/products/?limit=0');
         const data = await response.data;
         if (response.status === 200) {
           this.products = [...data.data];
