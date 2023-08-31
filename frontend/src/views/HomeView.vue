@@ -3,8 +3,10 @@ import SearchIcon from '../components/icons/SearchIcon.vue';
 import Hero from '../components/Hero.vue';
 import BasicInput from '../components/inputs/BasicInput.vue';
 import ProductItem from '../components/ProductItem.vue';
+import ImageDeta from '../components/ImageDeta.vue';
 
 import { ref, onMounted, reactive, computed } from 'vue';
+import { get_image } from '../utils';
 import { useProductStore } from '../stores/product';
 import { useHeroStore } from '../stores/hero';
 import { useAboutUsStore } from '../stores/aboutUs';
@@ -28,9 +30,6 @@ const tfIdf = reactive({});
 const hero = reactive({});
 const aboutUs = reactive({});
 const contactUses = reactive([]);
-
-import { get_image } from '../utils';
-import ImageDeta from '../components/ImageDeta.vue';
 
 onMounted(async () => {
   aboutUsStore.getAll();

@@ -1,18 +1,15 @@
 <script setup>
-import LinkWithLabel from '../components/LinkWithLabel.vue';
 
 import { onMounted, reactive, ref } from 'vue';
 
 import { useProductStore } from '../stores/product';
 import { useRoute } from 'vue-router';
 
-import { env } from '../utils'
 import ImageDeta from '../components/ImageDeta.vue';
 
 const productStore = useProductStore();
 const route = useRoute();
 const product = reactive({});
-const baseUrl = ref(env.api_url);
 
 const { productId } = route.params;
 
