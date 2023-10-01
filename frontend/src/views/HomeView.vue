@@ -11,11 +11,13 @@ import { useProductStore } from '../stores/product';
 import { useHeroStore } from '../stores/hero';
 import { useAboutUsStore } from '../stores/aboutUs';
 import { useContactUsStore } from '../stores/contactUs';
+import { useBannerStore } from '../stores/banner';
 
 const productStore = useProductStore();
 const heroStore = useHeroStore();
 const aboutUsStore = useAboutUsStore();
 const contactUsStore = useContactUsStore();
+const bannerStore = useBannerStore()
 
 const searchQuery = ref('');
 const pageCount = ref(1);
@@ -23,6 +25,7 @@ const productHasMore = ref(false);
 const isSearched = ref(false);
 const img = ref('');
 const imgAbout = ref('');
+const imgBanner = ref('');
 
 const products = reactive([]);
 const productsBackup = reactive([]);
@@ -36,8 +39,13 @@ onMounted(async () => {
   heroStore.getAll();
   productStore.getSome(pageCount.value, true);
   contactUsStore.getAll();
+  bannerStore.getAll();
   img.value = URL.createObjectURL(await get_image(hero.filename));
 });
+
+bannerStore.$subscribe(async (mutation, state) => {
+  imgBanner.value = URL.createObjectURL(await get_image(state.banner.filename));
+})
 
 aboutUsStore.$subscribe(async (mutation, state) => {
   Object.assign(aboutUs, state.aboutUs);
@@ -118,15 +126,16 @@ const seeMore = () => {
 <template>
   <div>
     <hero :image="img">
-      <h1
-        class="text-grey-100 text-4xl md:text-5xl font-medium leading-[3.5rem] md:leading-[4rem]"
-      >
+      <h1 class="text-grey-100 text-4xl md:text-5xl font-medium leading-[3.5rem] md:leading-[4rem]">
         {{ hero.main_text }}
       </h1>
       <span class="text-grey-50 font-light">
         {{ hero.alt_text }}
       </span>
     </hero>
+    <div class="container flex justify-center mx-auto my-8">
+      <img :src="imgBanner" class="w-2/5 md:w-3/5 lg:w-2/5 min-w-[300px] max-w-[400px]" />
+    </div>
     <main class="mx-auto flex flex-col gap-8">
       <div id="products" class="container mx-auto w-full">
         <div class="w-full justify-center items-center flex flex-col p-8">
@@ -136,58 +145,31 @@ const seeMore = () => {
             it below.
           </span>
         </div>
-        <div
-          id="products"
-          class="flex flex-col gap-8 justify-center items-center pb-4 px-4 md:px-0"
-        >
+        <div id="products" class="flex flex-col gap-8 justify-center items-center pb-4 px-4 md:px-0">
           <div class="w-full flex justify-end items-center gap-2">
-            <form
-              @submit.prevent="search"
-              class="flex justify-end items-center gap-2"
-            >
-              <basic-input
-                className="w-52"
-                :value="searchQuery"
-                @update="update"
-              />
+            <form @submit.prevent="search" class="flex justify-end items-center gap-2">
+              <basic-input className="w-52" :value="searchQuery" @update="update" />
               <button type="submit" class="bg-brand-400 p-2 rounded-md">
                 <search-icon color="text-grey-200" size="20" />
               </button>
             </form>
           </div>
           <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 w-full">
-            <product-item
-              v-for="product in products"
-              :key="product.id"
-              :product-id="product.id"
-              :image="product.filename"
-            >
+            <product-item v-for="product in products" :key="product.id" :product-id="product.id"
+              :image="product.filename">
               {{ product.title }}
             </product-item>
           </div>
-          <button
-            @click="seeMore"
-            v-if="productHasMore"
-            class="bg-brand-200 rounded-md py-1 px-3 text-lg text-grey-900"
-          >
+          <button @click="seeMore" v-if="productHasMore" class="bg-brand-200 rounded-md py-1 px-3 text-lg text-grey-900">
             See More
           </button>
         </div>
       </div>
-      <div
-        id="about"
-        class="w-full justify-center items-center flex flex-col p-8 bg-grey-50 gap-8"
-      >
+      <div id="about" class="w-full justify-center items-center flex flex-col p-8 bg-grey-50 gap-8">
         <h1 class="text-3xl text-brand-900 font-semibold">About Us</h1>
-        <div
-          class="flex flex-col gap-4 items-center md:items-stretch md:gap-0 md:flex-row justify-between w-full"
-        >
+        <div class="flex flex-col gap-4 items-center md:items-stretch md:gap-0 md:flex-row justify-between w-full">
           <div class="basis-1 md:basis-1/2 flex justify-center w-full">
-            <img
-              :src="imgAbout"
-              alt="about"
-              class="w-96 h-64 object-cover rounded-md"
-            />
+            <img :src="imgAbout" alt="about" class="w-96 h-64 object-cover rounded-md" />
           </div>
           <div class="basis-1 w-[80%] md:w-full md:basis-1/2 flex flex-col">
             <div class="flex gap-4 flex-col md:grow">
@@ -206,17 +188,9 @@ const seeMore = () => {
             </div>
             <div class="flex gap-2 items-center">
               <span>Contact us by: </span>
-              <a
-                v-for="contactUs in contactUses"
-                target="_blank"
-                :href="contactUs.link"
-                :key="contactUs.id"
-              >
-                <image-deta
-                  :filename="contactUs.filename"
-                  :alt-prop="contactUs.name"
-                  class-prop="w-8 h-8 object-cover rounded-md"
-                />
+              <a v-for="contactUs in contactUses" target="_blank" :href="contactUs.link" :key="contactUs.id">
+                <image-deta :filename="contactUs.filename" :alt-prop="contactUs.name"
+                  class-prop="w-8 h-8 object-cover rounded-md" />
               </a>
             </div>
           </div>

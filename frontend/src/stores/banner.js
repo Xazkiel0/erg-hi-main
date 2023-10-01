@@ -1,17 +1,17 @@
 import axios from 'axios';
 import { defineStore } from 'pinia';
 
-export const useAboutUsStore = defineStore('about-us', {
+export const useBannerStore = defineStore('banner', {
   state: () => ({
-    aboutUs: {},
+    banner: {},
   }),
   actions: {
     async getAll() {
       try {
-        const response = await axios.get('/about-us/');
+        const response = await axios.get('/banner/');
         const data = await response.data;
         if (response.status === 200) {
-          this.aboutUs = { ...data };
+          this.banner = { ...data };
         }
       } catch (err) {
         console.error('[ERROR]: ' + err);
@@ -42,7 +42,7 @@ export const useAboutUsStore = defineStore('about-us', {
     },
     async create(payload) {
       try {
-        const response = await axios.post(`/about-us/`, payload, {
+        const response = await axios.post(`/banner/`, payload, {
           headers: {
             Authorization: `Bearer ${$cookies.get('token')}`,
           },
@@ -59,7 +59,7 @@ export const useAboutUsStore = defineStore('about-us', {
     },
     async update(id, payload) {
       try {
-        const response = await axios.put(`/about-us/${id}/`, payload, {
+        const response = await axios.put(`/banner/${id}/`, payload, {
           headers: {
             Authorization: `Bearer ${$cookies.get('token')}`,
           },

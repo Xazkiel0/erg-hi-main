@@ -76,3 +76,7 @@ class ContactUsRequest(BaseModel):
     name: str
     filename: str
     link: str
+
+class BannerRequest(BaseModel):
+    name: str
+    filename: str

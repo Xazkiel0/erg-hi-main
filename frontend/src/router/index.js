@@ -14,6 +14,7 @@ import HeroView from '../views/admin/content/HeroView.vue';
 import AboutUsView from '../views/admin/content/AboutUsView.vue';
 import ContactUsListView from '../views/admin/content/ContactUsListView.vue';
 import ContactUsNewView from '../views/admin/content/ContactUsNewView.vue';
+import BannerView from '../views/admin/content/BannerView.vue';
 
 function requireAuth(to, from, next) {
   if ($cookies.get('token')) next();
@@ -126,6 +127,11 @@ const router = createRouter({
           path: 'contact-us/:contactId/edit',
           name: 'AdminContactUsEdit',
           component: ContactUsNewView,
+        },
+        {
+          path: 'banner',
+          name: 'AdminBanner',
+          component: BannerView,
         },
       ],
     },

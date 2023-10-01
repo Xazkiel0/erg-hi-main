@@ -5,61 +5,53 @@ import InputWithLabel from '../../../components/inputs/InputWithLabel.vue';
 import SectionTitle from '../../../components/admin/SectionTitle.vue';
 import BasicButton from '../../../components/inputs/BasicButton.vue';
 import { reactive, onMounted, ref, computed } from 'vue';
-import { useAboutUsStore } from '../../../stores/aboutUs';
+import { useBannerStore} from '../../../stores/banner';
 
-const aboutUsStore = useAboutUsStore();
+const bannerStore = useBannerStore();
 const fileInput = ref(null);
-const aboutUsBackup = reactive({});
+const bannerBackup = reactive({});
 const data = reactive({
   id: { value: '' },
-  text: {
+  name: {
     value: '',
     isError: false,
-    rules: { required: true, min: 6 },
-  },
-  description: {
-    value: '',
-    isError: false,
-    rules: { required: true, min: 12 },
+    rules: { required: true },
   },
   oldFile: { value: '' },
 });
 
 onMounted(() => {
-  aboutUsStore.getAll();
+  bannerStore.getAll();
 });
 
-aboutUsStore.$subscribe((mutation, state) => {
-  Object.assign(aboutUsBackup, state.aboutUs);
-  data.id.value = state.aboutUs.id;
-  data.text.value = state.aboutUs.text;
-  data.description.value = state.aboutUs.description;
-  data.oldFile.value = state.aboutUs.filename;
+bannerStore.$subscribe((mutation, state) => {
+  Object.assign(bannerBackup, state.banner);
+  data.id.value = state.banner.id;
+  data.name.value = state.banner.name;
+  data.oldFile.value = state.banner.filename;
 });
 
 const isDisabled = computed(() => {
-  return data.text.isError || data.description.isError;
+  return data.name.isError;
 });
 
 const isCorrect = computed(() => {
-  return !data.text.isError && !data.description.isError;
+  return !data.name.isError;
 });
 
 const submit = () => {
   if (isCorrect.value) {
     if (data.id.value) {
       if (!fileInput.value.files[0]) {
-        aboutUsStore.update(data.id.value, {
-          text: data.text.value,
-          description: data.description.value,
+        bannerStore.update(data.id.value, {
+          name: data.name.value,
           filename: data.oldFile.value,
         });
       } else {
-        aboutUsStore.uploadFileAndIn(
+        bannerStore.uploadFileAndIn(
           data.id.value,
           {
-            text: data.text.value,
-            description: data.description.value,
+            name: data.name.value,
             oldFile: data.oldFile.value,
           },
           fileInput.value.files[0]
@@ -69,11 +61,10 @@ const submit = () => {
       if (!fileInput.value.files[0]) {
         alert('Please add an image!');
       } else {
-        aboutUsStore.uploadFileAndIn(
+        bannerStore.uploadFileAndIn(
           '',
           {
-            text: data.text.value,
-            description: data.description.value,
+            name: data.name.value,
             oldFile: data.oldFile.value,
           },
           fileInput.value.files[0]
@@ -84,9 +75,8 @@ const submit = () => {
 };
 
 const reset = () => {
-  data.text.value = aboutUsBackup.text;
-  data.description.value = aboutUsBackup.description;
-  data.oldFile.value = aboutUsBackup.filename;
+  data.name.value = bannerBackup.name;
+  data.oldFile.value = bannerBackup.filename;
   fileInput.value.value = '';
 };
 
@@ -116,22 +106,14 @@ const errorChecker = (payload) => {
     <template #icon>
       <plus-icon size="28" />
     </template>
-    Edit About Us
-    <template #buttons>
-      <basic-button class-name="bg-red-500 text-grey-200">
-        <arrow-left-icon size="24" />
-        Back
-      </basic-button>
-    </template>
+    Edit Banner 
   </section-title>
   <div class="bg-grey-50 rounded-md my-4 flex flex-col p-4 gap-2">
-    <input-with-label label="Text" type="text" show-error-message :error-rules="data.text.rules" @update="update"
-      @errorChecker="errorChecker" :value="data.text.value" />
-    <input-with-label label="Description" type="textarea" show-error-message :error-rules="data.description.rules"
-      @update="update" @errorChecker="errorChecker" :value="data.description.value" />
+    <input-with-label label="Name" type="text" show-error-message :error-rules="data.name.rules"
+      @update="update" @errorChecker="errorChecker" :value="data.name.value" />
     <div class="flex flex-col">
       <label for="file" class="font-medium text-base">Image</label>
-      <input type="file" id="file" accept="image/png, image/jpeg" ref="fileInput" />
+      <input type="file" id="file" name="files" accept="image/png, image/jpeg" ref="fileInput" multiple />
     </div>
     <div class="flex justify-start items-centeri gap-2">
       <basic-button class-name="bg-brand-500 text-grey-200 disabled:cursor-not-allowed disabled:bg-brand-800"

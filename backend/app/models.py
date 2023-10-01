@@ -62,3 +62,10 @@ class ContactUs(Base):
     name = Column(String)
     filename = Column(String)
     link = Column(String)
+
+class Banner(Base):
+    __tablename__ = "banner"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, index=True)
+    name = Column(String)
+    filename = Column(String)

@@ -23,7 +23,7 @@ def show_hero(db: Session):
     if not hero:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Product with id {id} is not found",
+            detail=f"Hero with id {id} is not found",
         )
 
     return hero

@@ -92,6 +92,19 @@ const logout = () => {
             >Contact Us</span
           >
         </router-link>
+        <router-link
+          to="/admin/banner"
+          class="flex gap-4 cursor-pointer group"
+        >
+          <product-icon
+            size="24"
+            class="transition duration-200 group-hover:text-brand-600"
+          />
+          <span
+            class="text-md text-grey-900 font-medium transition duration-200 group-hover:text-brand-600"
+            >Banner</span
+          >
+        </router-link>
       </template>
       <template #bottom-menu>
         <div

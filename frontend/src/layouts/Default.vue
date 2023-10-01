@@ -46,10 +46,10 @@ const currentRoute = computed(() => {
       <router-view></router-view>
     </div>
     <foot>
-      <span class="hidden md:block text-brand-accent-100 text-sm">
+      <span class="hidden md:block text-brand-100 text-sm">
         RG Health Informatics Politeknik Elektronika Negeri Surabaya
       </span>
-      <span class="text-brand-accent-100"> &copy; {{ new Date().getFullYear() }} ERG - HI </span>
+      <span class="text-brand-100"> &copy; {{ new Date().getFullYear() }} ERG - HI </span>
     </foot>
   </div>
 </template>
