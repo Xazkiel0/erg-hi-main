@@ -133,9 +133,12 @@ const seeMore = () => {
         {{ hero.alt_text }}
       </span>
     </hero>
+    <div class="w-100 h-2 bg-brand-500"></div>
     <div class="container flex justify-center mx-auto my-8">
-      <img :src="imgBanner" class="w-2/5 md:w-3/5 lg:w-2/5 min-w-[300px] max-w-[400px]" />
+      <!-- <img :src="imgBanner" class="w-2/5 md:w-3/5 lg:w-2/5 min-w-[300px] max-w-[400px]" /> -->
+      <img src="/img/all.png" class="w-2/5 md:w-3/5 lg:w-2/5 min-w-[300px] max-w-[400px]" />
     </div>
+    <div class="w-100 h-2 bg-brand-500"></div>
     <main class="mx-auto flex flex-col gap-8">
       <div id="products" class="container mx-auto w-full">
         <div class="w-full justify-center items-center flex flex-col p-8">
