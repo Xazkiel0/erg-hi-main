@@ -24,6 +24,7 @@ class Member(Base):
     nip = Column(String)
     email = Column(String)
     google_scholar = Column(String)
+    website_profile = Column(String)
     status = Column(String)
     filename = Column(String)
 

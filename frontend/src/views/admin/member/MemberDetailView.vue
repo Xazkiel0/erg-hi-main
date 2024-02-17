@@ -98,8 +98,11 @@ const deleteMember = () => {
           <span>Status</span>:
           <span class="font-medium">{{ member.status}}</span>
         </div>
-        <link-with-label label="Scholar" :link="member.google_scholar">
+        <link-with-label label="Google Scholar" :link="member.google_scholar">
           {{ member.google_scholar }}
+        </link-with-label>
+        <link-with-label label="Website Profile" :link="member.webiste_profile">
+          {{ member.website_profile }}
         </link-with-label>
       </div>
     </div>

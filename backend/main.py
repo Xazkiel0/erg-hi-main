@@ -12,7 +12,8 @@ from app.routers import product, user, auth, about_us, contact_us, image, hero, 
 
 app = FastAPI()
 
-origins = ["http://hi.rg.pens.ac.id"]
+# origins = ["http://hi.rg.pens.ac.id"]
+origins = ["http://localhost:5173"]
 
 app.add_middleware(
     CORSMiddleware,

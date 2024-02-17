@@ -25,6 +25,7 @@ const data = reactive({
   nip: { value: '', isError: false, rules: { required: true } },
   email: { value: '', isError: false, rules: { required: true } },
   'google scholar': { value: '', isError: false, rules: { required: true } },
+  'website profile': { value: '', isError: false, rules: { required: false } },
   status: { value: '', isError: false, rules: { required: true } },
   oldFile: { value: '' },
 });
@@ -43,6 +44,7 @@ memberStore.$subscribe((mutation, state) => {
     data.nip.value = state.member.nip;
     data.email.value = state.member.email;
     data['google scholar'].value = state.member.google_scholar;
+    data['website profile'].value = state.member.website_profile ?? '';
     data.status.value = state.member.status;
     data.oldFile.value = state.member.filename;
   }
@@ -56,6 +58,7 @@ const isDisabled = computed(() => {
         data.nip.isError ||
         data.email.isError ||
         data['google scholar'].isError ||
+        data['website profile'].isError ||
         data.status.isError)
     );
   }
@@ -67,6 +70,7 @@ const isCorrect = computed(() => {
     !data.nip.isError &&
     !data.email.isError &&
     !data['google scholar'].isError &&
+    !data['website profile'].isError &&
     !data.status.isError
   );
 });
@@ -84,6 +88,7 @@ const submit = () => {
             nip: data.nip.value,
             email: data.email.value,
             google_scholar: data['google scholar'].value,
+            website_profile: data['website profile'].value,
             status: data.status.value,
           },
           fileInput.value.files[0]
@@ -98,6 +103,7 @@ const submit = () => {
             nip: data.nip.value,
             email: data.email.value,
             google_scholar: data['google scholar'].value,
+            website_profile: data['website profile'].value,
             status: data.status.value,
             oldFile: data.oldFile.value,
           },
@@ -109,6 +115,7 @@ const submit = () => {
           nip: data.nip.value,
           email: data.email.value,
           google_scholar: data['google scholar'].value,
+          website_profile: data['website profile'].value,
           status: data.status.value,
           filename: data.oldFile.value,
         });
@@ -122,7 +129,8 @@ const reset = () => {
     data.name.value = '';
     data.nip.value = '';
     data.email.value = '';
-    data['google_scolar'].value = '';
+    data['google scolar'].value = '';
+    data['website profile'].value = '';
     data.status.value = '';
     fileInput.value.value = '';
   } else {
@@ -130,6 +138,7 @@ const reset = () => {
     data.nip.value = memberBackup.nip;
     data.email.value = memberBackup.email;
     data['google scholar'].value = memberBackup.google_scholar;
+    data['website profile'].value = memberBackup.website_profile;
     data.status.value = memberBackup.status;
     data.oldFile.value = memberBackup.filename;
     fileInput.value.value = '';
@@ -210,6 +219,15 @@ const back = () => {
       @update="update"
       @errorChecker="errorChecker"
       :value="data['google scholar'].value"
+    />
+    <input-with-label
+      label="Website Profile"
+      type="text"
+      :show-error-message="isSubmited"
+      :error-rules="data['website profile'].rules"
+      @update="update"
+      @errorChecker="errorChecker"
+      :value="data['website profile'].value"
     />
     <input-with-label
       label="Status"
