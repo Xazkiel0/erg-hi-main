@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+from sqlalchemy import Column, String
 import uvicorn
 
 load_dotenv()
@@ -7,13 +8,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app import models
-from app.db import engine
+from app.db import add_column, engine
 from app.routers import product, user, auth, about_us, contact_us, image, hero, member, banner
 
 app = FastAPI()
 
-# origins = ["http://hi.rg.pens.ac.id"]
-origins = ["http://localhost:5173"]
+origins = ["http://hi.rg.pens.ac.id"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -25,6 +25,9 @@ app.add_middleware(
 )
 
 models.Base.metadata.create_all(bind=engine)
+
+# column = Column('website_profile', String)
+# add_column(engine, 'members', column)
 
 app.include_router(auth.router)
 app.include_router(product.router)

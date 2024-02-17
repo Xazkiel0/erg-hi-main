@@ -18,6 +18,7 @@ def show_members(db: Session, query, page, limit):
                 func.lower(member_model.nip).like(like_query),
                 func.lower(member_model.email).like(like_query),
                 func.lower(member_model.google_scholar).like(like_query),
+                func.lower(member_model.website_profile).like(like_query),
                 func.lower(member_model.status).like(like_query),
             )
         )
@@ -54,6 +55,7 @@ def create_member(request: schemas.MemberRequest, db: Session):
         nip=request.nip,
         email=request.email,
         google_scholar=request.google_scholar,
+        website_profile=request.website_profile,
         status=request.status,
         filename=request.filename,
     )

@@ -29,6 +29,7 @@ class MemberRequest(BaseModel):
     nip: str
     email: str
     google_scholar: str
+    website_profile: Optional[str]
     status: str
     filename: str
 
